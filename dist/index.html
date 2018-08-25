@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="utf-8">
     <style>
       text {
         font: 12px sans-serif;
       }
-      html, body, svg {
+
+      html,
+      body,
+      svg {
         margin: 0px;
         padding: 0px;
         height: 100%;
@@ -14,27 +18,24 @@
       }
     </style>
   </head>
+
   <body>
     <h1 style="margin-top: 0;">Start</h1>
-    <p>
-      <label>Debug</label>
-      <input type="checkbox" id="debugMode">
-    </p>
-    <script src="lib/socket.io.js"></script> <!-- include socket.io client side script -->
-    <script>
+    <script src="lib/socket.io.js"></script>
+    <script type="module">
+      import { init } from "./scripts/main.js";
       var socket = io(); //load socket.io-client and connect to the host that serves the page
       var updateCallback;
-      window.addEventListener("load", function(){ //when page loads
-        var lightbox = document.getElementById("debugMode"); 
-        lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
-          socket.emit("debugMode", this.checked); //send button status to server (as 1 or 0)
-        });
-        socket.emit("debugMode", lightbox.checked);
+      window.addEventListener("load", function () { //when page loads
 
-        socket.on('newData', function(){
-          console.info('newData', arguments);
+        socket.on('fileChange', function (fileName) {
+          console.info('fileChange', fileName);
         });
+
+        init();
+
       });
     </script>
   </body>
+
 </html>

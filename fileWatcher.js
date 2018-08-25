@@ -9,7 +9,7 @@ exports.watch = function(fileWatch, callback) {
         if (fsWait) return;
         fsWait = setTimeout(() => {
           fsWait = false;
-        }, 100);
+        }, 200);
     
         console.log(`${filename} file Changed`);
         if (callback)
