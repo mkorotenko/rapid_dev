@@ -4,6 +4,7 @@ var app = express();
 var server = require('http').createServer(app); 
 var io = require('socket.io')(server);
 //var events = require('events');
+const fw = require('./fileWatcher');
 
 var debugMode = false;
 
@@ -13,6 +14,7 @@ app.get('/', function(req, res,next) {
     res.sendFile(__dirname + '/dist/index.html');
 });
 
+fw.watch('./dist/module.js');
 //var eventEmitter = new events.EventEmitter();
 //when a client connects, do this
 io.on('connection', function(client) {
