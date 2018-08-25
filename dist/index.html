@@ -6,9 +6,6 @@
       text {
         font: 12px sans-serif;
       }
-      svg {
-        display: block;
-      }
       html, body, svg {
         margin: 0px;
         padding: 0px;
@@ -18,27 +15,15 @@
     </style>
   </head>
   <body>
-    <h1 style="margin-top: 0;">DHT Probe</h1>
+    <h1 style="margin-top: 0;">Start</h1>
     <p>
       <label>Debug</label>
       <input type="checkbox" id="debugMode">
-      <button id="update">Update</button>
-      <select id="period">
-          <option value="24" selected>Day</option>
-          <option value="12">12 hours</option>
-          <option value="6">6 hours</option>
-          <option value="1">Hour</option>
-      </select>
-      <label>Send</label>
-      <input type="checkbox" id="send">
     </p>
     <script src="lib/socket.io.js"></script> <!-- include socket.io client side script -->
     <script>
       var socket = io(); //load socket.io-client and connect to the host that serves the page
       var updateCallback;
-      window.chartUpdateRequest = function(callback) {
-          updateCallback = callback;
-        }
       window.addEventListener("load", function(){ //when page loads
         var lightbox = document.getElementById("debugMode"); 
         lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
@@ -46,24 +31,10 @@
         });
         socket.emit("debugMode", lightbox.checked);
 
-        var lightbox = document.getElementById("send"); 
-        lightbox.addEventListener("change", function() { //add event listener for when checkbox changes
-          socket.emit("sendToSerial", this.checked); //send button status to server (as 1 or 0)
-        });
-
-        var timerID;
         socket.on('newData', function(){
-          if (updateCallback && !timerID)
-            timerID = setTimeout(function(){
-              updateCallback();
-              timerID = undefined;
-            }, 1500);
+          console.info('newData', arguments);
         });
       });
-//      socket.on('light', function (data) { //get button status from client
-//        document.getElementById("light").checked = data; //change checkbox according to push button on Raspberry Pi
-//        socket.emit("light", data); //send push button status to back to server
-//      });
     </script>
   </body>
 </html>
