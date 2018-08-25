@@ -1,46 +1,41 @@
-// Allowed extensions list can be extended depending on your own needs
-const allowedExt = [
-    '.js',
-    '.ico',
-    '.css',
-    '.png',
-    '.jpg',
-    '.woff2',
-    '.woff',
-    '.ttf',
-    '.svg',
-];
+// server.js
+var express = require('express');  
+var app = express();  
+var server = require('http').createServer(app); 
+var io = require('socket.io')(server);
+var events = require('events');
 
-const express = require('express'),
-    bodyParser = require('body-parser'),
-    path = require('path'),
-    app = express(),
-    port = process.env.PORT || 3000;
+var debugMode = false;
 
-//app.get('/api', (req, res) => res.json({ application: 'Reibo collection' }));
-const routes = require('./routes'); //importing route
-routes(app); //register the route
-
-app.get('*', (req, res) => {
-    if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-        res.sendFile(path.resolve(`dist/${req.url}`));
-    } else {
-        res.sendFile(path.resolve('dist/index.html'));
-    }
+app.use(express.static(__dirname + '/dist')); 
+//redirect / to our index.html file
+app.get('/', function(req, res,next) {  
+    res.sendFile(__dirname + '/dist/index.html');
 });
 
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.raw({ limit: '50mb' }));
-app.use(bodyParser.text({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({
-    limit: '50mb',
-    extended: true
-}));
+var eventEmitter = new events.EventEmitter();
+//when a client connects, do this
+io.on('connection', function(client) {  
+    console.log('Socket: client connected');
+    client.on('debugMode', function(data) { //get light switch status from client
+       console.log('debugMode:', data); //turn LED on or off, for now we will just show it in console.log
+       debugMode = data;
+       eventEmitter.on('newData', function() {
+        client.emit('newData', debugMode);
+       });
+   });
 
-app.listen(port, () => console.log(`http is started ${port}`));
+   client.on('sendToSerial', function(data) { //get light switch status from client
+        console.log('sendToSerial:', data); //turn LED on or off, for now we will just show it in console.log
+    });
 
-// Catch errors
-app.on('error', (error) => {
-    console.error(new Date(), 'ERROR', error);
 });
 
+//start our web server and socket.io server listening
+server.listen(3000, function(){
+  console.log('HTTP server on port 3000');
+}); 
+
+// app.get('/docs/:docDate', function(req, res) {
+//     res.json({f:1});
+// });
