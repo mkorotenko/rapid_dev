@@ -1,3 +1,7 @@
-export function init() {
-    console.info('main.js ready')
+//import 
+export function init(event) {
+    console.info('main.js ready');
+    event.subscribe('fileChange', (fileName) => {
+        console.info('Main: fileChange', fileName)
+    })
 }
