@@ -15,9 +15,13 @@ app.get('/', function (req, res, next) {
 });
 
 var eventEmitter = new events.EventEmitter();
-fw.watch('./dist/scripts/main.js', function (fileName) {
-    eventEmitter.emit('fileChange', `./scripts/${fileName}`);
-});
+function setFileWatcher(filePathName) {
+    fw.watch(filePathName.replace('./', './dist/'), function () {
+        eventEmitter.emit('fileChange', filePathName);
+    });
+}
+
+setFileWatcher('./scripts/main.js');
 
 //when a client connects, do this
 io.on('connection', function (client) {

@@ -1,10 +1,10 @@
 class Application {
     constructor() {
-        console.info('Application running 1');
+        console.info('Application running 2');
     }
 
     unload() {
-        console.info('Application unload 1');
+        console.info('Application unload 2');
     }
 }
 
