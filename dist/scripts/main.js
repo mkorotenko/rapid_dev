@@ -53,6 +53,16 @@ class Application {
         controls.autoForward = false;
         controls.dragToLook = true;
     }
+
+    animate() {
+        requestAnimationFrame( this.animate );
+    
+        const delta = clock.getDelta();
+    
+        this.controls.update( delta );
+        scene.renderTo(camera);
+        stats.update();
+    }
 }
 
 export default new Application();
