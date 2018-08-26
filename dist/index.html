@@ -3,25 +3,22 @@
 
   <head>
     <meta charset="utf-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
-      text {
-        font: 12px sans-serif;
-      }
-
-      html,
-      body,
-      svg {
+      body {
+        font-family: Monospace;
+        background-color: #000;
+        color: #fff;
         margin: 0px;
-        padding: 0px;
-        height: 100%;
-        width: 100%;
+        overflow: hidden;
       }
     </style>
+    <script src="lib/stats.min.js"></script>
+    <script src="lib/socket.io.js"></script>
   </head>
 
   <body>
-    <h1 style="margin-top: 0;">Start</h1>
-    <script src="lib/socket.io.js"></script>
     <script type="module">
       import { Loader } from "./lib/moduleLoader.js";
 
@@ -31,6 +28,7 @@
         const loader = new Loader();
 
         window.module = loader.moduleRequire.bind(loader);
+        window.exports = {};
 
         module('./scripts/main.js').subscribe((module) => {
             console.info('Module ready', module);
