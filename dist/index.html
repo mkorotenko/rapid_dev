@@ -23,20 +23,21 @@
     <h1 style="margin-top: 0;">Start</h1>
     <script src="lib/socket.io.js"></script>
     <script type="module">
-      import { Loader } from "./scripts/main.js";
-      import { EventEmitter } from './lib/eventEmitter.js'
-      var socket = io(); //load socket.io-client and connect to the host that serves the page
-      var updateCallback;
-      window.EventEmitter = EventEmitter;
-      window.addEventListener("load", function () { //when page loads
+      import { Loader } from "./lib/moduleLoader.js";
 
+      window.addEventListener("load", function () { //when page loads
+        
+        const socket = io(); //load socket.io-client and connect to the host that serves the page
         const loader = new Loader();
+
         window.module = loader.moduleRequire.bind(loader);
-        module('../module.js').subscribe((module) => {
+
+        module('./scripts/main.js').subscribe((module) => {
             console.info('Module ready', module);
-          })
+        })
+
         socket.on('fileChange', function (fileName) {
-          loader.updateModule(`../${fileName}`);
+          loader.updateModule(fileName);
         });
 
       });

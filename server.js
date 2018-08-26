@@ -15,8 +15,8 @@ app.get('/', function (req, res, next) {
 });
 
 var eventEmitter = new events.EventEmitter();
-fw.watch('./dist/module.js', function (fileName) {
-    eventEmitter.emit('fileChange', fileName);
+fw.watch('./dist/scripts/main.js', function (fileName) {
+    eventEmitter.emit('fileChange', `./scripts/${fileName}`);
 });
 
 //when a client connects, do this
