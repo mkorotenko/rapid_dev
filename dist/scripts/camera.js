@@ -26,17 +26,17 @@ function saveState(storageName = 'camera') {
 }
 
 function readState(storageName = 'camera') {
-    const set = localStorage.getItem(storageName);
-    if (set) {
-        const settings = JSON.parse(set);
-        var position, rotation;
+    // const set = localStorage.getItem(storageName);
+    // if (set) {
+    //     const settings = JSON.parse(set);
+    //     var position, rotation;
 
-        position = settings.position;
-        camera.position.set(position.x, position.y, position.z)
+    //     position = settings.position;
+    //     camera.position.set(position.x, position.y, position.z)
 
-        rotation = settings.rotation;
-        camera.rotation.set(rotation._x, rotation._y, rotation._z)
-    }
+    //     rotation = settings.rotation;
+    //     camera.rotation.set(rotation._x, rotation._y, rotation._z)
+    // }
 }
 
 //a little bit different way of doing it than the player module

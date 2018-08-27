@@ -1,6 +1,7 @@
 import * as THREE from "../lib/three.module.js";
 import { InertialContol } from './inertialControl.js';
-import Camera from './camera.js';
+import Mesh from './models/test.model.js';
+import Lights from './models/lights.js';
 
 class Application {
     
@@ -9,20 +10,29 @@ class Application {
 
     constructor() {
     
-        console.info('Application running 3', THREE);
+        console.info('Application running');
+
         this.stats = new Stats();
-        this.attachContainer();
-        this.createScene();
-        this.camera = Camera;
-        this.attachControl();
         this.clock = new THREE.Clock();
 
+        this.attachContainer();
+        this.attachScene();
+        this.attachCamera();
+        this.attachControl();
+
         this.animate();
+
+        this.camera.position.z = 50;
+
+        this.scene.add(Lights());
+        this.scene.add(Mesh());
+
+        console.info('Scene', this.scene);
     }
 
     unload() {
         this.container.remove();
-        console.info('Application unload 3');
+        console.info('Application unload');
     }
 
     attachContainer() {
@@ -35,19 +45,27 @@ class Application {
         document.body.appendChild( container );   
     }
 
-    createScene() {
+    attachCamera() {
+        this.camera = new THREE.PerspectiveCamera(80,1,0.1,10000);
+        this.scene.add(this.camera);
+        this.camera.position.z = 1;
+    }
+
+    attachScene() {
         this.scene = new THREE.Scene();
         const renderer = this.renderer = new THREE.WebGLRenderer();
+
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth, window.innerHeight );
 
-        window.addEventListener( 'resize', () => this.renderer.setSize( window.innerWidth, window.innerHeight ), false );
+        window.addEventListener( 'resize', () => renderer.setSize( window.innerWidth, window.innerHeight ), false );
 
         this.scene.renderer = renderer;
         this.scene.renderTo = function(camera) {
             this.renderer.render( this.scene, camera );
         }.bind(this);
         this.container.appendChild( this.scene.renderer.domElement );
+
     }
 
     attachControl() {
