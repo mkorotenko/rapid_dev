@@ -1,13 +1,13 @@
 import * as THREE from "../lib/three.module.js";
 import { InertialContol } from './inertialControl.js';
-//import Lights from './models/lights.js';
-import Mesh from './models/test.model.js';
 
 class Application {
     
     constructor() {
     
         console.info('Application running');
+
+        this.subscriptions = {};
 
         this.stats = new Stats();
         this.clock = new THREE.Clock();
@@ -19,37 +19,27 @@ class Application {
 
         this.animate();
 
-        // let lightID;
-        // module('./scripts/models/lights.js')
-        //     .subscribe((Lights) => {
-        //         console.info('lights ready', Lights);
-        //         let prevLight;
-        //         if (prevLight = this.scene.children.find(m => m.uuid === lightID))
-        //             this.scene.remove(prevLight);
-
-        //         let light = Lights.default();
-        //         lightID = light.uuid;
-        //         this.scene.add(light);
-        //     });
         this.importMesh('./scripts/models/lights.js');
-
         this.importMesh('./scripts/models/test.model.js');
 
-        //this.scene.add(Mesh());
-
         console.info('Scene', this.scene);
+
     }
+    
 
     unload() {
         this.container.remove();
+        Object.keys(this.subscriptions).forEach(k => this.subscriptions[k]());
         console.info('Application unload');
     }
 
     importMesh(meshModule) {
+        if (this.subscriptions[meshModule])
+            this.subscriptions[meshModule]();
         let meshID;
-        module(meshModule)
+        this.subscriptions[meshModule] = module(meshModule)
             .subscribe((Mesh) => {
-                console.info('Mesh ready ${meshModule}', Mesh);
+                console.info(`Mesh ready ${meshModule}`, Mesh);
                 let prevMesh;
                 if (prevMesh = this.scene.children.find(m => m.uuid === meshID))
                     this.scene.remove(prevMesh);

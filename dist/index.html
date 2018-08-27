@@ -31,7 +31,7 @@
         window.exports = {};
 
         module('./scripts/main.js').subscribe((module) => {
-            console.info('Module ready', module);
+            console.info('Main ready');
         })
 
         socket.on('fileChange', function (fileName) {
