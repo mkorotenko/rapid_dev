@@ -5,9 +5,6 @@ import Lights from './models/lights.js';
 
 class Application {
     
-    //container;
-    //scene;
-
     constructor() {
     
         console.info('Application running');
@@ -21,8 +18,6 @@ class Application {
         this.attachControl();
 
         this.animate();
-
-        this.camera.position.z = 50;
 
         this.scene.add(Lights());
         this.scene.add(Mesh());
@@ -48,7 +43,7 @@ class Application {
     attachCamera() {
         this.camera = new THREE.PerspectiveCamera(80,1,0.1,10000);
         this.scene.add(this.camera);
-        this.camera.position.z = 1;
+        this.camera.position.z = 50;
     }
 
     attachScene() {
@@ -65,7 +60,6 @@ class Application {
             this.renderer.render( this.scene, camera );
         }.bind(this);
         this.container.appendChild( this.scene.renderer.domElement );
-
     }
 
     attachControl() {
