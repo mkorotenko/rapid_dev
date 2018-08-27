@@ -1,4 +1,5 @@
 import * as THREE from "../lib/three.module.js";
+import MeshLoader from './meshLoader.js';
 import { InertialContol } from './inertialControl.js';
 
 class Application {
@@ -19,8 +20,8 @@ class Application {
 
         this.animate();
 
-        this.importMesh('./scripts/models/lights.js');
-        this.importMesh('./scripts/models/test.model.js');
+        this.loader = new MeshLoader(this.scene);
+        this.loader.importMesh('./scripts/models/test.model.js');
 
         console.info('Scene', this.scene);
 
@@ -29,25 +30,8 @@ class Application {
 
     unload() {
         this.container.remove();
-        Object.keys(this.subscriptions).forEach(k => this.subscriptions[k]());
+        this.loader.destroy();
         console.info('Application unload');
-    }
-
-    importMesh(meshModule) {
-        if (this.subscriptions[meshModule])
-            this.subscriptions[meshModule]();
-        let meshID;
-        this.subscriptions[meshModule] = module(meshModule)
-            .subscribe((Mesh) => {
-                console.info(`Mesh ready ${meshModule}`, Mesh);
-                let prevMesh;
-                if (prevMesh = this.scene.children.find(m => m.uuid === meshID))
-                    this.scene.remove(prevMesh);
-
-                let mesh = Mesh.default();
-                meshID = mesh.uuid;
-                this.scene.add(mesh);
-            });
     }
 
     attachContainer() {
