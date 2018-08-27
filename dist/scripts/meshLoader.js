@@ -14,18 +14,19 @@ export default class MeshLoader {
         if (this.subscriptions[meshModule])
             this.subscriptions[meshModule]();
 
-        let meshID;
+        let _mesh;
         this.subscriptions[meshModule] = module(meshModule)
             .subscribe((Mesh) => {
                 console.info(`Mesh ready ${meshModule}`, Mesh);
-                let prevMesh;
-                if (prevMesh = this.obj3d.children.find(m => m.uuid === meshID))
-                    this.obj3d.remove(prevMesh);
+                if (_mesh) {
+                    this.obj3d.remove(_mesh);
+                    if (_mesh.destroy)
+                        _mesh.destroy();
+                }
 
-                let mesh = Mesh.default();
-                meshID = mesh.uuid;
+                _mesh = Mesh.default();
 
-                this.obj3d.add(mesh);
+                this.obj3d.add(_mesh);
             });
     }
 }

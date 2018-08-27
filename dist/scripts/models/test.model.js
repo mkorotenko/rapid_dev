@@ -7,7 +7,7 @@ export default function () {
         color: new THREE.Color("rgb(226,35,213)"),
         emissive: new THREE.Color("rgb(255,128,64)"),
         specular: new THREE.Color("rgb(255,155,255)"),
-        shininess: 6,
+        shininess: 3,
         flatShading: THREE.FlatShading,
         transparent: 1,
         opacity: 1
@@ -18,6 +18,10 @@ export default function () {
 
     let loader = new MeshLoader(Ico);
     loader.importMesh('./scripts/models/lights.js');
+
+    Ico.destroy = function() {
+        loader.destroy();
+    }
 
     return Ico;
 }
