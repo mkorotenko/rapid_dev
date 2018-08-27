@@ -1,7 +1,7 @@
 import * as THREE from "../lib/three.module.js";
 import { InertialContol } from './inertialControl.js';
+//import Lights from './models/lights.js';
 import Mesh from './models/test.model.js';
-import Lights from './models/lights.js';
 
 class Application {
     
@@ -19,8 +19,23 @@ class Application {
 
         this.animate();
 
-        this.scene.add(Lights());
-        this.scene.add(Mesh());
+        // let lightID;
+        // module('./scripts/models/lights.js')
+        //     .subscribe((Lights) => {
+        //         console.info('lights ready', Lights);
+        //         let prevLight;
+        //         if (prevLight = this.scene.children.find(m => m.uuid === lightID))
+        //             this.scene.remove(prevLight);
+
+        //         let light = Lights.default();
+        //         lightID = light.uuid;
+        //         this.scene.add(light);
+        //     });
+        this.importMesh('./scripts/models/lights.js');
+
+        this.importMesh('./scripts/models/test.model.js');
+
+        //this.scene.add(Mesh());
 
         console.info('Scene', this.scene);
     }
@@ -28,6 +43,21 @@ class Application {
     unload() {
         this.container.remove();
         console.info('Application unload');
+    }
+
+    importMesh(meshModule) {
+        let meshID;
+        module(meshModule)
+            .subscribe((Mesh) => {
+                console.info('Mesh ready ${meshModule}', Mesh);
+                let prevMesh;
+                if (prevMesh = this.scene.children.find(m => m.uuid === meshID))
+                    this.scene.remove(prevMesh);
+
+                let mesh = Mesh.default();
+                meshID = mesh.uuid;
+                this.scene.add(mesh);
+            });
     }
 
     attachContainer() {

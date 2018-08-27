@@ -6,7 +6,7 @@ export default function () {
         color      :  new THREE.Color("rgb(226,35,213)"),
         emissive   :  new THREE.Color("rgb(255,128,64)"),
         specular   :  new THREE.Color("rgb(255,155,255)"),
-        shininess  :  10,
+        shininess  :  4,
         shading    :  THREE.FlatShading,
         transparent: 1,
         opacity    : 1

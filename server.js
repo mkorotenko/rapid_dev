@@ -22,6 +22,8 @@ function setFileWatcher(filePathName) {
 }
 
 setFileWatcher('./scripts/main.js');
+setFileWatcher('./scripts/models/lights.js');
+setFileWatcher('./scripts/models/test.model.js');
 
 //when a client connects, do this
 io.on('connection', function (client) {
