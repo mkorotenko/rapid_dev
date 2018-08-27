@@ -4,7 +4,7 @@ import MeshLoader from '../meshLoader.js';
 export default function () {
 
     var pinkMat = new THREE.MeshPhongMaterial({
-        color: new THREE.Color("rgb(226,35,213)"),
+        color: new THREE.Color("rgb(206,35,213)"),
         emissive: new THREE.Color("rgb(255,128,64)"),
         specular: new THREE.Color("rgb(255,155,255)"),
         shininess: 3,

@@ -1,6 +1,6 @@
 import * as THREE from "../lib/three.module.js";
 
-export class InertialContol {
+export default class InertialContol {
 
 	constructor(object, domElement) {
 

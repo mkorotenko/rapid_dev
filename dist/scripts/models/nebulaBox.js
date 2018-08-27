@@ -1,6 +1,6 @@
 import modelLoader from './modelLoader.js';
 
-var create = function() {
+export default function() {
     return new Promise(function(resolve, reject) {
         const nebula = modelLoader.colladaGroup('./models/collada/models/Middle_Nebula.dae')
 
@@ -33,6 +33,3 @@ var create = function() {
     })
 
 }
-
-//a little bit different way of doing it than the player module
-export default create

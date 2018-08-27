@@ -1,6 +1,6 @@
 import * as THREE from "../lib/three.module.js";
 import MeshLoader from './meshLoader.js';
-import { InertialContol } from './inertialControl.js';
+import InertialContol from './inertialControl.js';
 
 class Application {
     
@@ -20,7 +20,6 @@ class Application {
 
         this.animate();
 
-        
         this.loader = new MeshLoader(this.scene);
         this.loader.importMesh('./scripts/models/test.model.js');
 
