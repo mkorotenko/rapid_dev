@@ -15,8 +15,8 @@ const Camera = function camera() {
 }()
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
+    Camera.aspect = window.innerWidth / window.innerHeight;
+    Camera.updateProjectionMatrix();
 }
 
 function saveState(storageName = 'camera') {
