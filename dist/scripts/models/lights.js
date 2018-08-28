@@ -9,6 +9,8 @@ export default class LightLoader {
         L1.position.x = 200;
 
         this.mesh = L1;
+
+
     }
 
 }

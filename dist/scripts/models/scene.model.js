@@ -22,12 +22,10 @@ export default class MeshConstructor {
         loader.importMesh('./scripts/models/lights.js');
 
         this.loaders.push(loader);
-    
-        // Ico.destroy = function() {
-        //     loader.destroy();
-        // }
+        
     
         this.mesh = Ico;
+
     }
 
     destroy() {

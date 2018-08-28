@@ -21,7 +21,7 @@ class Application {
         this.animate();
 
         this.loader = new MeshLoader(this.scene);
-        this.loader.importMesh('./scripts/models/test.model.js');
+        this.loader.importMesh('./scripts/models/scene.model.js');
 
         console.info('Scene', this.scene);
 
