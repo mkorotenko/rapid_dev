@@ -1,9 +1,11 @@
 
 export default class MeshLoader { 
 
-    constructor(obj3d) {
+    constructor(obj3d, meshModule) {
         this.subscriptions = {};
         this.obj3d = obj3d;
+        if (meshModule)
+            this.importMesh(meshModule);
     }
 
     destroy() {

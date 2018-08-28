@@ -20,8 +20,7 @@ class Application {
 
         this.animate();
 
-        this.loader = new MeshLoader(this.scene);
-        this.loader.importMesh('./scripts/models/scene.model.js');
+        this.loader = new MeshLoader(this.scene, './scripts/models/scene.model.js');
 
         console.info('Scene', this.scene);
 

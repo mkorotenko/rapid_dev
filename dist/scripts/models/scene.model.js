@@ -18,11 +18,7 @@ export default class MeshConstructor {
         Ico.rotation.z = 0.5;
     
         this.loaders = [];
-        let loader = new MeshLoader(Ico);
-        loader.importMesh('./scripts/models/lights.js');
-
-        this.loaders.push(loader);
-        
+        this.loaders.push(new MeshLoader(Ico, './scripts/models/lights.js'));
     
         this.mesh = Ico;
 
