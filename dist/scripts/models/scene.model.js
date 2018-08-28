@@ -1,5 +1,6 @@
 import * as THREE from "../../lib/three.module.js";
 import MeshLoader from '../meshLoader.js';
+import Nebula from './nebulaBox.js';
 
 export default class MeshConstructor {
 
@@ -22,6 +23,9 @@ export default class MeshConstructor {
     
         this.mesh = Ico;
 
+        Nebula().then(nebula => {
+            this.mesh.add(nebula);
+        })
     }
 
     destroy() {

@@ -1,8 +1,9 @@
-import modelLoader from './modelLoader.js';
+import * as THREE from "../../lib/three.module.js";
+import colladaGroup from './modelLoader.js';
 
 export default function() {
     return new Promise(function(resolve, reject) {
-        const nebula = modelLoader.colladaGroup('./models/collada/models/Middle_Nebula.dae')
+        const nebula = colladaGroup('scripts/models/collada/models/Middle_Nebula.dae')
 
         Promise.all([nebula]).then( models => {
             function getMeshes(group) {
@@ -26,6 +27,8 @@ export default function() {
             })
             models[0].name = 'Nebula group';
             models[0].scale.multiplyScalar(10);
+
+            models[0].add(new THREE.AmbientLight( 0xffffff, 2 ));
 
             resolve(models[0]);
         });

@@ -64,7 +64,6 @@ socket.on('connection', function (client) {
     });
 
 });
-
 //start our web server and socket.io server listening
 server.listen(3000, function () {
     console.log('HTTP server on port 3000');
