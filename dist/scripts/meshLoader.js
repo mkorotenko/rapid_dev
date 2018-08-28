@@ -17,16 +17,24 @@ export default class MeshLoader {
         let _mesh;
         this.subscriptions[meshModule] = module(meshModule)
             .subscribe((Mesh) => {
-                console.info(`Mesh ready ${meshModule}`, Mesh);
                 if (_mesh) {
-                    this.obj3d.remove(_mesh);
+                    this.obj3d.remove(_mesh.mesh);
                     if (_mesh.destroy)
                         _mesh.destroy();
                 }
 
-                _mesh = Mesh.default();
+                console.info(`Mesh ready ${meshModule}`, Mesh);
+                _mesh = new Mesh.default();
 
-                this.obj3d.add(_mesh);
+                this.obj3d.add(_mesh.mesh);
+            }, 
+            () => {
+                if (_mesh) {
+                    console.info(`Mesh removed ${meshModule}`);
+                    this.obj3d.remove(_mesh.mesh);
+                    if (_mesh.destroy)
+                        _mesh.destroy();
+                }
             });
     }
 }

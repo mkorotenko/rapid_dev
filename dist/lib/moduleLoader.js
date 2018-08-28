@@ -43,14 +43,21 @@ class EventEmitter {
             event.forEach((fn) => fn.call(null, data));
     }
 
-    subscribe(eventName, fn) {
+    subscribe(eventName, fn, unsubscribe) {
         if (!this.events[eventName]) 
             this.events[eventName] = [];
 
         this.events[eventName].push(fn);
         return () => {
+            if (unsubscribe)
+                unsubscribe();
             this.events[eventName] = this.events[eventName].filter((eventFn) => fn !== eventFn);
         }
+    }
+
+    hasEvent(eventName) {
+        const event = this.events[eventName];
+        return !!event;
     }
 
     event(eventName) {
@@ -77,7 +84,13 @@ export class Loader {
     }
 
     updateModule(fileName) {
-        this.eventEmitter.emit(`update_${fileName}`);
+        const eventName = `update_${fileName}`;
+        if (this.eventEmitter.hasEvent(`update_${fileName}`)) {
+            this.eventEmitter.emit(eventName);
+            return true;
+        }
+        else
+            return false;
     }
 
     moduleRequire(fileName) {

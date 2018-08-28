@@ -35,8 +35,13 @@
         })
 
         socket.on('fileChange', function (fileName) {
-          loader.updateModule(fileName);
+          if (!loader.updateModule(fileName))
+            location.reload();
         });
+
+        // window.onbeforeunload = function(e) {
+        //   socket.disconnect();
+        // };
 
       });
     </script>
