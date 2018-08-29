@@ -18,7 +18,6 @@ export default class LightLoader {
 
         this.mesh = group;
 
-
     }
 
 }
