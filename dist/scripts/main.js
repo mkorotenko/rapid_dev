@@ -1,6 +1,7 @@
 import * as THREE from "../lib/three.module.js";
 import MeshLoader from './meshLoader.js';
 import InertialContol from './inertialControl.js';
+import Camera from './camera.js';
 
 class Application {
     
@@ -44,9 +45,10 @@ class Application {
     }
 
     attachCamera() {
-        this.camera = new THREE.PerspectiveCamera(80,1,0.1,10000);
+        this.camera = Camera;//new THREE.PerspectiveCamera(80,1,0.1,10000);
         this.scene.add(this.camera);
-        this.camera.position.z = 50;
+        this.camera.readState();
+        //this.camera.position.z = 50;
     }
 
     attachScene() {
@@ -67,7 +69,7 @@ class Application {
 
     attachControl() {
         const controls = this.controls = new InertialContol(this.camera, this.scene.renderer.domElement);
-        controls.movementSpeed = 0.1;
+        controls.movementSpeed = 5;
         controls.rollSpeed = Math.PI / 3;
         controls.autoForward = false;
         controls.dragToLook = true;

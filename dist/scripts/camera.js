@@ -6,10 +6,12 @@ const Camera = function camera() {
     camera.position.y = 1;
     camera.lookAt( new THREE.Vector3( 0, 0, 0 ) );
 
-    camera.saveState = saveState;
-    camera.readState = readState;
+    camera.saveState = saveState.bind(camera);
+    camera.readState = readState.bind(camera);
 
     window.addEventListener( 'resize', onWindowResize, false );
+    window.addEventListener( 'keyup', () => camera.saveState());
+    window.addEventListener( 'mouseup', () => camera.saveState());
 
     return camera;
 }()
@@ -20,23 +22,23 @@ function onWindowResize() {
 }
 
 function saveState(storageName = 'camera') {
-    const position = JSON.stringify(camera.position);
-    const rotation = JSON.stringify(camera.rotation);
+    const position = JSON.stringify(this.position);
+    const rotation = JSON.stringify(this.rotation);
     localStorage.setItem(storageName, `{"position":${ position },"rotation":${ rotation }}`);
 }
 
 function readState(storageName = 'camera') {
-    // const set = localStorage.getItem(storageName);
-    // if (set) {
-    //     const settings = JSON.parse(set);
-    //     var position, rotation;
+     const set = localStorage.getItem(storageName);
+     if (set) {
+         const settings = JSON.parse(set);
+         var position, rotation;
 
-    //     position = settings.position;
-    //     camera.position.set(position.x, position.y, position.z)
+         position = settings.position;
+         this.position.set(position.x, position.y, position.z)
 
-    //     rotation = settings.rotation;
-    //     camera.rotation.set(rotation._x, rotation._y, rotation._z)
-    // }
+         rotation = settings.rotation;
+         this.rotation.set(rotation._x, rotation._y, rotation._z)
+     }
 }
 
 //a little bit different way of doing it than the player module

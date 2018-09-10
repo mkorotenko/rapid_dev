@@ -79,8 +79,10 @@ export default class InertialContol {
 			case 65: /*A*/ this.moveState.left = 1; break;
 			case 68: /*D*/ this.moveState.right = 1; break;
 
-			case 82: /*R*/ this.moveState.up = 1; break;
-			case 70: /*F*/ this.moveState.down = 1; break;
+			// case 82: /*R*/ this.moveState.up = 1; break;
+			// case 70: /*F*/ this.moveState.down = 1; break;
+			case 90: /*Z*/ this.moveState.up = 1; break;
+			case 88: /*X*/ this.moveState.down = 1; break;
 
 			case 38: /*up*/ this.moveState.pitchUp = 1; break;
 			case 40: /*down*/ this.moveState.pitchDown = 1; break;
@@ -110,8 +112,10 @@ export default class InertialContol {
 			case 65: /*A*/ this.moveState.left = 0; break;
 			case 68: /*D*/ this.moveState.right = 0; break;
 
-			case 82: /*R*/ this.moveState.up = 0; break;
-			case 70: /*F*/ this.moveState.down = 0; break;
+			// case 82: /*R*/ this.moveState.up = 0; break;
+			// case 70: /*F*/ this.moveState.down = 0; break;
+			case 90: /*Z*/ this.moveState.up = 0; break;
+			case 88: /*X*/ this.moveState.down = 0; break;
 
 			case 38: /*up*/ this.moveState.pitchUp = 0; break;
 			case 40: /*down*/ this.moveState.pitchDown = 0; break;
@@ -138,7 +142,7 @@ export default class InertialContol {
 		}
 
 		event.preventDefault();
-		event.stopPropagation();
+		//event.stopPropagation();
 
 		if (this.dragToLook) {
 
@@ -179,7 +183,7 @@ export default class InertialContol {
 	mouseup(event) {
 
 		event.preventDefault();
-		event.stopPropagation();
+		//event.stopPropagation();
 
 		if (this.dragToLook) {
 
