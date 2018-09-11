@@ -29,6 +29,7 @@ export default class PoiLoader {
         line.material.opacity = 0.25;
         line.material.transparent = true;
         group.add( line );
+        console.info('line', line);
 
         this.mesh = group;
     }
