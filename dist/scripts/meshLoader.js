@@ -25,7 +25,7 @@ export default class MeshLoader {
                         _mesh.destroy();
                 }
 
-                console.info(`Mesh ready ${meshModule}`, Mesh);
+                //console.info(`Mesh ready ${meshModule}`, Mesh);
                 _mesh = new Mesh.default();
 
                 this.obj3d.add(_mesh.mesh);

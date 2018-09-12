@@ -6,6 +6,14 @@ function getBoundingBoxes(group) {
     return result;
 }
 
+function sphereBoundingBox(sphere) {
+    let result = [];
+    console.info('sphereBoundingBox', sphere);
+    //Vector3 {x: -0, y: 2.200000047683716, z: 0}
+    //node.matrixWorld
+    return result;
+}
+
 export default class PoiLoader {
 
     constructor() {
@@ -26,6 +34,7 @@ export default class PoiLoader {
         sphere1.material.opacity = 0.25;
         sphere1.material.transparent = true;
         sphere1.position.x = 3;
+        sphere1.position.y = 3;
         //sphere1.geometry.computeBoundingBox();
         group.add( sphere1 );
 
@@ -43,14 +52,14 @@ export default class PoiLoader {
         var helper = new THREE.BoxHelper(sphere, 0xff0000);
         helper.update();
         group.add(helper);
-        helper.geometry.computeBoundingBox();
-        boundings.push(helper.geometry.boundingBox);
+        //helper.geometry.computeBoundingBox();
+        boundings.push(sphereBoundingBox(sphere));
 
         var helper1 = new THREE.BoxHelper(sphere1, 0x0ff000);
         helper1.update();
         group.add(helper1);
-        helper1.geometry.computeBoundingBox();
-        boundings.push(helper1.geometry.boundingBox);
+        //helper1.geometry.computeBoundingBox();
+        boundings.push(sphereBoundingBox(sphere1));
 
         //console.info('helpers', helper, helper1);
 
