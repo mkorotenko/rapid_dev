@@ -7,10 +7,17 @@ function getBoundingBoxes(group) {
 }
 
 function sphereBoundingBox(sphere) {
-    let result = [];
+    let result = {};
     console.info('sphereBoundingBox', sphere);
+    let bb = sphere.geometry.boundingBox;
+    if (!bb) {
+        sphere.geometry.computeBoundingBox();
+        bb = sphere.geometry.boundingBox;
+    }
     //Vector3 {x: -0, y: 2.200000047683716, z: 0}
     //node.matrixWorld
+    result.min = bb.min.applyMatrix4(sphere.matrixWorld);
+    result.max = bb.max.applyMatrix4(sphere.matrixWorld);
     return result;
 }
 
@@ -34,7 +41,7 @@ export default class PoiLoader {
         sphere1.material.opacity = 0.25;
         sphere1.material.transparent = true;
         sphere1.position.x = 3;
-        sphere1.position.y = 3;
+        sphere1.position.y = 4.5;
         //sphere1.geometry.computeBoundingBox();
         group.add( sphere1 );
 
