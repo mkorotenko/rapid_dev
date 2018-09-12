@@ -65,6 +65,8 @@ class Application {
             this.renderer.render( this.scene, camera );
         }.bind(this);
         this.container.appendChild( this.scene.renderer.domElement );
+
+        window.scene = this.scene;
     }
 
     attachControl() {
