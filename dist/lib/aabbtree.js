@@ -128,7 +128,7 @@ AABBTree.prototype.remove = function (externalNode) {
     if (index !== undefined) {
         if (this.numExternalNodes > 1) {
             var nodes = this.nodes;
-            debug.assert(nodes[index].externalNode === externalNode);
+            //debug.assert(nodes[index].externalNode === externalNode);
 
             nodes[index].clear();
 
@@ -177,7 +177,7 @@ AABBTree.prototype.update = function (externalNode, extents) {
         var needsRebound = this.needsRebound;
         var nodes = this.nodes;
         var node = nodes[index];
-        debug.assert(node.externalNode === externalNode);
+        //debug.assert(node.externalNode === externalNode);
         var nodeExtents = node.extents;
 
         var doUpdate = (needsRebuild || needsRebound || nodeExtents[0] > min0 || nodeExtents[1] > min1 || nodeExtents[2] > min2 || nodeExtents[3] < max0 || nodeExtents[4] < max1 || nodeExtents[5] < max2);

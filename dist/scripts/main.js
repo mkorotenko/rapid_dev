@@ -27,7 +27,6 @@ class Application {
 
     }
     
-
     unload() {
         this.container.remove();
         this.loader.destroy();
@@ -82,7 +81,9 @@ class Application {
     
         const delta = this.clock.getDelta();
     
-        this.controls.update( delta );
+        this.controls.update(delta);
+        if (this.loader)
+            this.loader.animate(delta);
         this.scene.renderTo(this.camera);
         this.stats.update();
     }

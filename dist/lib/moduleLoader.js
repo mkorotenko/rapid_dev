@@ -100,18 +100,19 @@ export class Loader {
             import(`../${fileName}`).then((module) => {
                 _module = module;
                 event.emit(module);
+                this.eventEmitter.subscribe(`update_${fileName}`, () => {
+                    if (_module.unload) 
+                        _module.unload();
+                    else if (_module.default && _module.default.unload)
+                        _module.default.unload();
+    
+                    import(`../${fileName}?rand=${Math.random()}`).then((module) => {
+                        _module = module;
+                        event.emit(module);
+                   })
+                })
             })
-            this.eventEmitter.subscribe(`update_${fileName}`, () => {
-                if (_module.unload) 
-                    _module.unload();
-                else if (_module.default && _module.default.unload)
-                    _module.default.unload();
 
-                import(`../${fileName}?rand=${Math.random()}`).then((module) => {
-                    _module = module;
-                    event.emit(module);
-               })
-            })
             return event;
         }
         else
