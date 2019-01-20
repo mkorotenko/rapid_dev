@@ -57,6 +57,13 @@ class Application {
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth, window.innerHeight );
 
+        let fog = new THREE.Fog( 0x222222, 1000, 2000 );
+        renderer.setClearColor(fog.color, 1);
+        renderer.autoClear = false;
+
+        renderer.shadowMapEnabled = true;
+        renderer.shadowMapSoft = true;
+
         window.addEventListener( 'resize', () => renderer.setSize( window.innerWidth, window.innerHeight ), false );
 
         this.scene.renderer = renderer;
