@@ -22,24 +22,16 @@ export default class PoiLoader {
     
             var world = demo.getWorld();
     
-            world.gravity.set(0,0,-50);
+            world.gravity.set(0,0,0);
             world.broadphase = new CANNON.NaiveBroadphase();
             world.solver.iterations = 5;
     
-            world.defaultContactMaterial.contactEquationStiffness = 5e6;
-            world.defaultContactMaterial.contactEquationRelaxation = 10;
+            world.defaultContactMaterial.contactEquationStiffness = 5e8;
+            world.defaultContactMaterial.contactEquationRelaxation = 0.9;
     
             // Since we have many bodies and they don't move very much, we can use the less accurate quaternion normalization
             world.quatNormalizeFast = true;
             world.quatNormalizeSkip = 4; // ...and we do not have to normalize every step.
-    
-            // ground plane
-            var groundShape = new CANNON.Plane(new CANNON.Vec3(0,0,1));
-            var groundBody = new CANNON.Body({ mass: 0 });
-            groundBody.addShape(groundShape);
-            groundBody.position.set(0,0,0);
-            world.add(groundBody);
-            demo.addVisual(groundBody);
     
             // plane -x
             var planeShapeXmin = new CANNON.Plane();
@@ -73,25 +65,41 @@ export default class PoiLoader {
             planeYmax.position.set(0,5,0);
             world.add(planeYmax);
     
+            var boxShape = new CANNON.Box(new CANNON.Vec3(5,5,0.001));
+            var boxBody = new CANNON.Body({ mass: 0 });
+            boxBody.addShape(boxShape);
+            boxBody.position.set(0,0,-15);
+            world.addBody(boxBody);
+            demo.addVisual(boxBody);
+    
+            var boxShape1 = new CANNON.Box(new CANNON.Vec3(5,5,0.001));
+            var boxBody1 = new CANNON.Body({ mass: 0 });
+            boxBody1.addShape(boxShape1);
+            boxBody1.position.set(0,0,25);
+            world.addBody(boxBody1);
+            demo.addVisual(boxBody1);
+
             var bodies = [];
             var i = 0;
             interval = setInterval(function(){
                 // Sphere
                 i++;
-                var sphereShape = new CANNON.Sphere(size);
+                var sphereShape = new CANNON.Sphere(0.5);
                 var b1 = new CANNON.Body({ mass: 5 });
                 b1.addShape(sphereShape);
                 b1.position.set(2*size*Math.sin(i),2*size*Math.cos(i),7*2*size);
+
+                b1.velocity.set(Math.random() * 5,Math.random() * 5,Math.random() * 5);
                 world.add(b1);
                 demo.addVisual(b1);
                 bodies.push(b1);
     
-                if(bodies.length>80){
+                if(bodies.length>580){
                     var b = bodies.shift();
                     demo.removeVisual(b);
                     world.remove(b);
                 }
-                if (i>100)
+                if (i>580)
                     clearInterval(interval);
             },100);
         });

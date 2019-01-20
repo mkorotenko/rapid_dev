@@ -444,78 +444,6 @@ CANNON.Demo = function(options){
     var windowHalfX = window.innerWidth / 2;
     var windowHalfY = window.innerHeight / 2;
 
-    // init();
-    // animate();
-
-    // function init() {
-
-    //     container = document.createElement( 'div' );
-    //     document.body.appendChild( container );
-
-    //     // Camera
-    //     camera = new THREE.PerspectiveCamera( 24, SCREEN_WIDTH / SCREEN_HEIGHT, NEAR, FAR );
-
-    //     camera.up.set(0,0,1);
-    //     camera.position.set(0,30,20);
-
-    //     // SCENE
-    //     scene = that.scene = new THREE.Scene();
-    //     scene.fog = new THREE.Fog( 0x222222, 1000, FAR );
-
-    //     // LIGHTS
-    //     ambient = new THREE.AmbientLight( 0x222222 );
-    //     scene.add( ambient );
-
-    //     light = new THREE.SpotLight( 0xffffff );
-    //     light.position.set( 30, 30, 40 );
-    //     light.target.position.set( 0, 0, 0 );
-
-    //     light.castShadow = true;
-
-    //     light.shadowCameraNear = 10;
-    //     light.shadowCameraFar = 100;//camera.far;
-    //     light.shadowCameraFov = 30;
-
-    //     light.shadowMapBias = 0.0039;
-    //     light.shadowMapDarkness = 0.5;
-    //     light.shadowMapWidth = SHADOW_MAP_WIDTH;
-    //     light.shadowMapHeight = SHADOW_MAP_HEIGHT;
-
-    //     //light.shadowCameraVisible = true;
-
-    //     scene.add( light );
-    //     scene.add( camera );
-
-    //     // RENDERER
-    //     renderer = new THREE.WebGLRenderer( { clearColor: 0x000000, clearAlpha: 1, antialias: false } );
-    //     renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-    //     renderer.domElement.style.position = "relative";
-    //     renderer.domElement.style.top = MARGIN + 'px';
-    //     container.appendChild( renderer.domElement );
-
-    //     document.addEventListener('mousemove',onDocumentMouseMove);
-    //     window.addEventListener('resize',onWindowResize);
-
-    //     renderer.setClearColor( scene.fog.color, 1 );
-    //     renderer.autoClear = false;
-
-    //     renderer.shadowMapEnabled = true;
-    //     renderer.shadowMapSoft = true;
-
-    // }
-
-    var t = 0, newTime, delta;
-
-    // function animate(){
-    //     requestAnimationFrame( animate );
-    //     if(!settings.paused){
-    //         updateVisuals();
-    //         updatePhysics();
-    //     }
-    //     render();
-    //     stats.update();
-    // }
-
     var lastCallTime = 0;
     function updatePhysics(){
         // Step world
@@ -538,32 +466,6 @@ CANNON.Demo = function(options){
     }
 
     this.updatePhysics = updatePhysics;
-
-    function onDocumentMouseMove( event ) {
-        mouseX = ( event.clientX - windowHalfX );
-        mouseY = ( event.clientY - windowHalfY );
-    }
-
-    function onWindowResize( event ) {
-        SCREEN_WIDTH = window.innerWidth;
-        SCREEN_HEIGHT = window.innerHeight;
-
-        renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-
-        camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
-        camera.updateProjectionMatrix();
-
-        controls.screen.width = SCREEN_WIDTH;
-        controls.screen.height = SCREEN_HEIGHT;
-
-        camera.radius = ( SCREEN_WIDTH + SCREEN_HEIGHT ) / 4;
-    }
-
-    function render(){
-        controls.update();
-        renderer.clear();
-        renderer.render( that.scene, camera );
-    }
 
     document.addEventListener('keypress',function(e){
 return;
