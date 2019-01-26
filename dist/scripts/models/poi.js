@@ -24,7 +24,7 @@ export default class PoiLoader {
     
             world.gravity.set(0,0,0);
             world.broadphase = new CANNON.NaiveBroadphase();
-            world.solver.iterations = 5;
+            world.solver.iterations = 1;
     
             world.defaultContactMaterial.contactEquationStiffness = 5e8;
             world.defaultContactMaterial.contactEquationRelaxation = 0.9;
@@ -79,6 +79,7 @@ export default class PoiLoader {
             world.addBody(boxBody1);
             demo.addVisual(boxBody1);
 
+            console.info('boxes', boxBody1)
             var bodies = [];
             var i = 0;
             interval = setInterval(function(){
@@ -87,19 +88,19 @@ export default class PoiLoader {
                 var sphereShape = new CANNON.Sphere(0.5);
                 var b1 = new CANNON.Body({ mass: 5 });
                 b1.addShape(sphereShape);
-                b1.position.set(2*size*Math.sin(i),2*size*Math.cos(i),7*2*size);
+                b1.position.set(2*size*Math.sin(i),2*size*Math.cos(i),0);
 
-                b1.velocity.set(Math.random() * 5,Math.random() * 5,Math.random() * 5);
+                b1.velocity.set((Math.random() * 5) - 2.5,(Math.random() * 5) - 2.5,(Math.random() * 5) - 2.5);
                 world.add(b1);
                 demo.addVisual(b1);
                 bodies.push(b1);
     
-                if(bodies.length>580){
+                if(bodies.length>800){
                     var b = bodies.shift();
                     demo.removeVisual(b);
                     world.remove(b);
                 }
-                if (i>580)
+                if (i>800)
                     clearInterval(interval);
             },100);
         });

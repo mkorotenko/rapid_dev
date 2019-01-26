@@ -59,10 +59,10 @@ class Application {
 
         let fog = new THREE.Fog( 0x222222, 1000, 2000 );
         renderer.setClearColor(fog.color, 1);
-        renderer.autoClear = false;
+        renderer.autoClear = true;
 
-        renderer.shadowMapEnabled = true;
-        renderer.shadowMapSoft = true;
+        // renderer.shadowMapEnabled = true;
+        // renderer.shadowMapSoft = true;
 
         window.addEventListener( 'resize', () => renderer.setSize( window.innerWidth, window.innerHeight ), false );
 

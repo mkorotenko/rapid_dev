@@ -16,9 +16,9 @@ export default class MeshConstructor {
         this.loaders.push(new MeshLoader(this.mesh, './scripts/models/lights.js'));
         this.loaders.push(new MeshLoader(this.mesh, './scripts/models/poi.js'));
     
-        Nebula().then(nebula => {
-            this.mesh.add(nebula);
-        })
+        // Nebula().then(nebula => {
+        //     this.mesh.add(nebula);
+        // })
 
         this.animate = animate.bind(this);
 

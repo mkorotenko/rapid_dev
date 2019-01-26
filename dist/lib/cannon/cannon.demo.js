@@ -72,11 +72,11 @@ CANNON.Demo = function(options){
 
     // Material
     var materialColor = 0xdddddd;
-    var solidMaterial = new THREE.MeshLambertMaterial( { color: materialColor, transparent: true } );
+    var solidMaterial = new THREE.MeshLambertMaterial( { color: materialColor, transparent: false } );
     //THREE.ColorUtils.adjustHSV( solidMaterial.color, 0, 0, 0.9 );
-    var wireframeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe:true } );
+    var wireframeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe: true } );
     this.currentMaterial = solidMaterial;
-    var contactDotMaterial = new THREE.MeshLambertMaterial( { color: 0xff0000, transparent: true } );
+    var contactDotMaterial = new THREE.MeshLambertMaterial( { color: 0xff0000, transparent: false } );
     var particleMaterial = this.particleMaterial = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
 
     // Geometry caches
@@ -92,7 +92,7 @@ CANNON.Demo = function(options){
     var bboxGeometry = new THREE.BoxGeometry(1,1,1);
     var bboxMaterial = new THREE.MeshBasicMaterial({
         color: materialColor,
-        wireframe:true
+        //wireframe:true
     });
     var bboxMeshCache = new GeometryCache(function(){
         return new THREE.Mesh(bboxGeometry,bboxMaterial);
@@ -157,19 +157,19 @@ CANNON.Demo = function(options){
     var renderModes = ["solid","wireframe"];
 
     function updategui(){
-        if(gui){
-            // First level
-            for (var i in gui.__controllers){
-                gui.__controllers[i].updateDisplay();
-            }
+        // if(gui){
+        //     // First level
+        //     for (var i in gui.__controllers){
+        //         gui.__controllers[i].updateDisplay();
+        //     }
 
-            // Second level
-            for (var f in gui.__folders){
-                for (var i in gui.__folders[f].__controllers){
-                    gui.__folders[f].__controllers[i].updateDisplay();
-                }
-            }
-        }
+        //     // Second level
+        //     for (var f in gui.__folders){
+        //         for (var i in gui.__folders[f].__controllers){
+        //             gui.__folders[f].__controllers[i].updateDisplay();
+        //         }
+        //     }
+        // }
     }
 
     var light, scene, ambient, stats, info;
@@ -257,7 +257,6 @@ CANNON.Demo = function(options){
             vec.z = 1e-6;
         }
     }
-
 
     function updateVisuals(){
         var N = bodies.length;
@@ -533,14 +532,12 @@ return;
         }
     });
 
-
     function changeScene(n){
         that.dispatchEvent({ type: 'destroy' });
         settings.paused = false;
         updategui();
         buildScene(n);
     }
-
 
     function start(){
         buildScene(0);
@@ -818,16 +815,16 @@ CANNON.Demo.prototype.shape2mesh = function(body){
             throw "Visual type not recognized: "+shape.type;
         }
 
-        mesh.receiveShadow = true;
-        mesh.castShadow = true;
+        // mesh.receiveShadow = true;
+        // mesh.castShadow = true;
         if(mesh.children){
             for(var i=0; i<mesh.children.length; i++){
-                mesh.children[i].castShadow = true;
-                mesh.children[i].receiveShadow = true;
+                // mesh.children[i].castShadow = true;
+                // mesh.children[i].receiveShadow = true;
                 if(mesh.children[i]){
                     for(var j=0; j<mesh.children[i].length; j++){
-                        mesh.children[i].children[j].castShadow = true;
-                        mesh.children[i].children[j].receiveShadow = true;
+                        // mesh.children[i].children[j].castShadow = true;
+                        // mesh.children[i].children[j].receiveShadow = true;
                     }
                 }
             }
