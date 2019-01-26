@@ -72,7 +72,7 @@ CANNON.Demo = function(options){
 
     // Material
     var materialColor = 0xdddddd;
-    var solidMaterial = new THREE.MeshLambertMaterial( { color: materialColor, transparent: false } );
+    var solidMaterial = new THREE.MeshPhongMaterial( { color: 0x156289, emissive: 0x072534, side: THREE.DoubleSide, flatShading: true } );//new THREE.MeshLambertMaterial( { color: materialColor, transparent: false } );
     //THREE.ColorUtils.adjustHSV( solidMaterial.color, 0, 0, 0.9 );
     var wireframeMaterial = new THREE.MeshLambertMaterial( { color: 0xffffff, wireframe: true } );
     this.currentMaterial = solidMaterial;

@@ -65,14 +65,14 @@ export default class PoiLoader {
             planeYmax.position.set(0,5,0);
             world.add(planeYmax);
     
-            var boxShape = new CANNON.Box(new CANNON.Vec3(5,5,0.001));
+            var boxShape = new CANNON.Box(new CANNON.Vec3(5,5,1));
             var boxBody = new CANNON.Body({ mass: 0 });
             boxBody.addShape(boxShape);
             boxBody.position.set(0,0,-15);
             world.addBody(boxBody);
             demo.addVisual(boxBody);
     
-            var boxShape1 = new CANNON.Box(new CANNON.Vec3(5,5,0.001));
+            var boxShape1 = new CANNON.Box(new CANNON.Vec3(5,5,1));
             var boxBody1 = new CANNON.Body({ mass: 0 });
             boxBody1.addShape(boxShape1);
             boxBody1.position.set(0,0,25);
@@ -120,6 +120,71 @@ export default class PoiLoader {
     }
 
 }
+
+function getSphere(r, x,y,z,col) {
+
+    var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    var sphere = new THREE.Mesh( geometry, material );
+
+    // var sg = new THREE.SphereBufferGeometry( r, 10, 10 );
+    // var wf = new THREE.WireframeGeometry( sg );
+
+//     var sphere = new THREE.LineSegments( wf );
+//     sphere.material.depthTest = false;
+//     sphere.material.opacity = 0.25;
+//     sphere.material.transparent = true;
+    sphere.position.x = x||0;
+    sphere.position.y = y||0;
+    sphere.position.z = z||0;
+
+    return sphere;
+//     var helper = new THREE.BoxHelper(sphere, col);
+//     helper.update();
+//     sphere.userData.box = helper;
+
+//     sphere.updateBBox = function() {
+//         if (!sphere.boundingBox)
+//             sphere.boundingBox = [];
+//         let bb = sphere.boundingBox;
+//         let _bb = getBoundingBox(sphere.geometry.boundingBox, sphere.position);
+//         if (sphere.aabbNode && sphere.aabbNode.AABBTree) {
+//             sphere.aabbNode.AABBTree.update(sphere.aabbNode, _bb);
+//         } else {
+//             bb[0] = _bb[0];
+//             bb[1] = _bb[1];
+//             bb[2] = _bb[2];
+//             bb[3] = _bb[3];
+//             bb[4] = _bb[4];
+//             bb[5] = _bb[5];
+//         }
+//     }
+
+//     sphere.getBBox = function() {
+//         if (!sphere.geometry.boundingBox) {
+//             sphere.geometry.computeBoundingBox();
+//         }
+//         sphere.updateBBox();
+//         var b = sphere.boundingBox;
+//         return sphere.aabbNode = {
+//             spatialIndex: -1,
+//             extents: b
+//         }
+//     }
+
+//     sphere.updatePosition = function(x,y,z) {
+//         sphere.position.x += x || 0;
+//         sphere.position.y += y || 0;
+//         sphere.position.z += z || 0;
+
+//         sphere.userData.box.update();
+
+//         sphere.updateBBox();
+//     }
+
+//     return sphere;
+}
+
 
 // function getBoundingBox(boundingBox, position) {
 //     return [

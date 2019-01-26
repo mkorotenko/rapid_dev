@@ -21,12 +21,12 @@ export default function() {
                 return res;
             }
             getMeshes(models[0]).forEach(m => {
-                //m.material.depthTest = true;
+                m.material.depthTest = true;
                 //m.material.transparent = false;
                 m.renderOrder = -1;
             })
             models[0].name = 'Nebula group';
-            models[0].scale.multiplyScalar(10);
+            models[0].scale.multiplyScalar(100);
 
             //models[0].add(new THREE.AmbientLight( 0xffffff, 2 ));
 

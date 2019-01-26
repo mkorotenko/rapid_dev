@@ -2,98 +2,107 @@ import * as THREE from "../lib/three.module.js";
 import MeshLoader from './meshLoader.js';
 import InertialContol from './inertialControl.js';
 import Camera from './camera.js';
+import EventEmitter from './eventEmitter.js';
 
 class Application {
     
     constructor() {
     
-        console.info('Application running');
+        this.onRender = new EventEmitter();
 
-        this.subscriptions = {};
+        this.render = this.render.bind(this);
 
-        this.stats = new Stats();
         this.clock = new THREE.Clock();
 
-        this.attachContainer();
-        this.attachScene();
-        this.attachCamera();
+        this.createStatistic();
+
+        this.createCamera();
+
+        this.createRenderer();
+        
         this.attachControl();
 
-        this.animate();
+        this.scene = new THREE.Scene();
 
         this.loader = new MeshLoader(this.scene, './scripts/models/scene.model.js');
 
-        console.info('Scene', this.scene);
+        this.onRender.subscribe(delta => this.loader.animate(delta));
+
+        //FINISH
+        this.render();
 
     }
     
     unload() {
-        this.container.remove();
+        // this.container.remove();
         this.loader.destroy();
         console.info('Application unload');
     }
 
-    attachContainer() {
+    render() {
+
+        requestAnimationFrame( this.render );
+
+        this.onRender.emit(this.clock.getDelta());
+        this.renderer.render(this.scene, this.camera);
+
+    };
+
+    createStatistic() {
+
+        this.stats = new Stats();
+
         if (document.getElementById('webgl'))
             document.getElementById('webgl').remove();
 
-        let container = this.container = document.createElement( 'div' );
+        let container = document.createElement( 'div' );
         container.id='webgl';
         container.appendChild( this.stats.dom );
-        document.body.appendChild( container );   
+        document.body.appendChild( container );
+
+        this.onRender.subscribe(() => this.stats.update())
     }
 
-    attachCamera() {
-        this.camera = Camera;//new THREE.PerspectiveCamera(80,1,0.1,10000);
-        this.scene.add(this.camera);
-        this.camera.readState();
-        //this.camera.position.z = 50;
+    createCamera() {
+    //     this.camera = Camera;//new THREE.PerspectiveCamera(80,1,0.1,10000);
+    //     this.scene.add(this.camera);
+    //     this.camera.readState();
+    //     //this.camera.position.z = 50;
+        var camera = this.camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 10000 );
+        camera.position.z = 30;
+
+        window.addEventListener( 'resize', function () {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+        }, false );
     }
 
-    attachScene() {
-        this.scene = new THREE.Scene();
-        const renderer = this.renderer = new THREE.WebGLRenderer();
-
+    createRenderer() {
+        var renderer = this.renderer = new THREE.WebGLRenderer( { antialias: true } );
         renderer.setPixelRatio( window.devicePixelRatio );
         renderer.setSize( window.innerWidth, window.innerHeight );
+        renderer.setClearColor( 0x000000, 1 );
+        document.body.appendChild( renderer.domElement );
 
-        let fog = new THREE.Fog( 0x222222, 1000, 2000 );
-        renderer.setClearColor(fog.color, 1);
-        renderer.autoClear = true;
-
-        // renderer.shadowMapEnabled = true;
-        // renderer.shadowMapSoft = true;
-
-        window.addEventListener( 'resize', () => renderer.setSize( window.innerWidth, window.innerHeight ), false );
-
-        this.scene.renderer = renderer;
-        this.scene.renderTo = function(camera) {
-            this.renderer.render( this.scene, camera );
-        }.bind(this);
-        this.container.appendChild( this.scene.renderer.domElement );
-
-        window.scene = this.scene;
+        window.addEventListener( 'resize', function () {
+            renderer.setSize( window.innerWidth, window.innerHeight );
+        }, false );
     }
 
     attachControl() {
-        const controls = this.controls = new InertialContol(this.camera, this.scene.renderer.domElement);
+        const controls = this.controls = new InertialContol(this.camera, this.renderer.domElement);
         controls.movementSpeed = 5;
         controls.rollSpeed = Math.PI / 3;
         controls.autoForward = false;
         controls.dragToLook = true;
+
+        this.onRender.subscribe((delta) => {
+            this.controls.update(delta);
+        })
     }
 
-    animate() {
-        requestAnimationFrame( this.animate.bind(this) );
-    
-        const delta = this.clock.getDelta();
-    
-        this.controls.update(delta);
-        if (this.loader)
-            this.loader.animate(delta);
-        this.scene.renderTo(this.camera);
-        this.stats.update();
-    }
 }
 
 export default new Application();
