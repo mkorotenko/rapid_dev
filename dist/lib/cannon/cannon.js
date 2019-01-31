@@ -712,10 +712,10 @@ var Broadphase = _dereq_('./Broadphase');
 var Vec3 = _dereq_('../math/Vec3');
 var Shape = _dereq_('../shapes/Shape');
 
-/**https://www.xvideos.com/video32794045/blonde_teen_s_first_anal
- * Axis aligned uniform grid broadphase.https://hls-hw.xvideos-cdn.com/videos/hls/a9/80/6b/a9806b16a0d8259d9cbd2c67d3fb9aef/hls-360p0.ts?e=1548205986&l=0&h=561f256d0356eef8072c1d621e56086d
- * @class GridBroadphase https://hls-hw.xvideos-cdn.com/videos/hls/a9/80/6b/a9806b16a0d8259d9cbd2c67d3fb9aef/hls-360p.m3u8?e=1548206742&l=0&h=6aa4ee149e5ca4e4489a0c089607adbf
- * @constructor view-source:https://hls-js.netlify.com/demo/
+/**
+ * Axis aligned uniform grid broadphase.
+ * @class GridBroadphase
+ * @constructor view-source:
  * @extends Broadphase
  * @todo Needs support for more than just planes and spheres.
  * @param {Vec3} aabbMin

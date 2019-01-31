@@ -65,14 +65,14 @@ export default class PoiLoader {
             planeYmax.position.set(0,5,0);
             world.add(planeYmax);
     
-            var boxShape = new CANNON.Box(new CANNON.Vec3(5,5,1));
+            var boxShape = new CANNON.Box(new CANNON.Vec3(5,5,0.001));
             var boxBody = new CANNON.Body({ mass: 0 });
             boxBody.addShape(boxShape);
             boxBody.position.set(0,0,-15);
             world.addBody(boxBody);
             demo.addVisual(boxBody);
     
-            var boxShape1 = new CANNON.Box(new CANNON.Vec3(5,5,1));
+            var boxShape1 = new CANNON.Box(new CANNON.Vec3(5,5,0.001));
             var boxBody1 = new CANNON.Body({ mass: 0 });
             boxBody1.addShape(boxShape1);
             boxBody1.position.set(0,0,25);
@@ -85,11 +85,11 @@ export default class PoiLoader {
             interval = setInterval(function(){
                 // Sphere
                 i++;
-                var sphereShape = new CANNON.Sphere(0.5);
+                var sphereShape = new CANNON.Box(new CANNON.Vec3(0.5,0.5,0.5));
                 var b1 = new CANNON.Body({ mass: 5 });
                 b1.addShape(sphereShape);
                 b1.position.set(2*size*Math.sin(i),2*size*Math.cos(i),0);
-
+                // b1.
                 b1.velocity.set((Math.random() * 5) - 2.5,(Math.random() * 5) - 2.5,(Math.random() * 5) - 2.5);
                 world.add(b1);
                 demo.addVisual(b1);
@@ -100,8 +100,10 @@ export default class PoiLoader {
                     demo.removeVisual(b);
                     world.remove(b);
                 }
-                if (i>800)
+                if (i>100) {
                     clearInterval(interval);
+                    console.info('b1', b1);
+                }
             },100);
         });
     
